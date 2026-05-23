@@ -3,7 +3,7 @@ pipeline {
     
     environment {
         DOCKER_HUB_USER = 'yashwanthraog'
-        DOCKER_CREDS_ID = 'dckr_pat_FKOsjjI4F_bs4ltoOp0X6L0elUI'
+        DOCKER_CREDS_ID = 'ddocker-hub-credentials'
     }
 
     stages {

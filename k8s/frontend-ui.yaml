@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: frontend-container
-        image: docker.io/YOUR_DOCKER_HUB_USERNAME/my-frontend:latest
+        image: docker.io/yashwanthraog/my-frontend:latest
         ports:
         - containerPort: 80
 ---
