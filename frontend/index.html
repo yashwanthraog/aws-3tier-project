@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AWS DevOps 3-Tier App</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; text-align: center; margin-top: 50px; background: #f4f6f9; color: #333; }
+        .card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: inline-block; }
+        button { background: #2575fc; color: white; border: none; padding: 12px 24px; font-size: 16px; border-radius: 4px; cursor: pointer; transition: 0.3s; }
+        button:hover { background: #1a5bbf; }
+        #response { margin-top: 20px; font-weight: bold; color: #2c3e50; font-size: 18px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Welcome to the AWS 3-Tier App</h1>
+        <p>Click below to test connection through all three architecture tiers.</p>
+        <button onclick="fetchData()">Fetch Data from Backend</button>
+        <p id="response"></p>
+    </div>
+
+    <script>
+        async function fetchData() {
+            try {
+                // /api/data routes directly through our Kubernetes ingress/service layout
+                const res = await fetch('/api/data');
+                const data = await res.json();
+                document.getElementById('response').innerText = data.message;
+            } catch (err) {
+                document.getElementById('response').innerText = "Error connecting to Backend API Layer!";
+            }
+        }
+    </script>
+</body>
+</html>
