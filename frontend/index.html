@@ -34,7 +34,7 @@
 </body>
 </html> -->
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -197,5 +197,169 @@
         }
     </script>
 </body>
-</html>
+</html> -->
 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Media Discovery Hub - Games</title>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --accent-color: #58a6ff;
+            --text-main: #c9d1d9;
+            --text-muted: #8b949e;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #1f2937, #111827);
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border: 1px solid #30363d;
+        }
+        header h1 {
+            margin: 0;
+            color: var(--accent-color);
+            font-size: 2.5rem;
+            letter-spacing: 1px;
+        }
+        header p {
+            color: var(--text-muted);
+            margin-top: 10px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .btn-fetch {
+            background-color: #238636;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: block;
+            margin: 0 auto 30px auto;
+        }
+        .btn-fetch:hover {
+            background-color: #2ea043;
+        }
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        .game-card {
+            background-color: var(--card-bg);
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .game-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+        }
+        .game-info {
+            padding: 20px;
+        }
+        .game-title {
+            margin: 0 0 10px 0;
+            font-size: 1.4rem;
+            color: #fff;
+        }
+        .game-genre {
+            display: inline-block;
+            background-color: #21262d;
+            color: var(--accent-color);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            border: 1px solid #30363d;
+        }
+        .game-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>NEXUS MEDIA DISCOVERY HUB</h1>
+            <p>Live Kubernetes Cluster 3-Tier Gaming Library Platform</p>
+        </header>
+
+        <button class="btn-fetch" onclick="fetchGameDetails()">Load Live Game Database</button>
+
+        <div class="games-grid" id="gamesContainer">
+            <div class="game-card">
+                <div class="game-info">
+                    <span class="game-genre">Action / RPG</span>
+                    <h2 class="game-title">Elden Ring</h2>
+                    <p class="game-desc">Rise, Tarnished, and be guided by grace to brandish the power of the Elden Ring and become an Elden Lord in the Lands Between.</p>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-info">
+                    <span class="game-genre">Sci-Fi / Action</span>
+                    <h2 class="game-title">Cyberpunk 2077</h2>
+                    <p class="game-desc">An open-world, action-adventure story set in Night City, a megalopolis obsessed with power, glamour and body modification.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function fetchGameDetails() {
+            const container = document.getElementById('gamesContainer');
+            
+            fetch('/api/games') 
+                .then(response => response.json())
+                .then(data => {
+                    if(data && data.length > 0) {
+                        container.innerHTML = ''; 
+                        data.forEach(game => {
+                            container.innerHTML += `
+                                <div class="game-card">
+                                    <div class="game-info">
+                                        <span class="game-genre">${game.genre || 'Media'}</span>
+                                        <h2 class="game-title">${game.title}</h2>
+                                        <p class="game-desc">${game.description || 'No description available.'}</p>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                    } else {
+                        alert("Connected to API, but database collection is currently empty!");
+                    }
+                })
+                .catch(err => {
+                    console.error("API Fetch Error:", err);
+                    alert("Could not connect to live backend API endpoint. Displaying static hub values.");
+                });
+        }
+    </script>
+</body>
+</html>
