@@ -332,34 +332,63 @@
     </div>
 
     <script>
-        function fetchGameDetails() {
-            const container = document.getElementById('gamesContainer');
+        // function fetchGameDetails() {
+        //     const container = document.getElementById('gamesContainer');
             
-            fetch('/api/games') 
-                .then(response => response.json())
-                .then(data => {
-                    if(data && data.length > 0) {
-                        container.innerHTML = ''; 
-                        data.forEach(game => {
-                            container.innerHTML += `
-                                <div class="game-card">
-                                    <div class="game-info">
-                                        <span class="game-genre">${game.genre || 'Media'}</span>
-                                        <h2 class="game-title">${game.title}</h2>
-                                        <p class="game-desc">${game.description || 'No description available.'}</p>
-                                    </div>
-                                </div>
-                            `;
-                        });
-                    } else {
-                        alert("Connected to API, but database collection is currently empty!");
-                    }
-                })
-                .catch(err => {
-                    console.error("API Fetch Error:", err);
-                    alert("Could not connect to live backend API endpoint. Displaying static hub values.");
+        //     fetch('/api/games') 
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             if(data && data.length > 0) {
+        //                 container.innerHTML = ''; 
+        //                 data.forEach(game => {
+        //                     container.innerHTML += `
+        //                         <div class="game-card">
+        //                             <div class="game-info">
+        //                                 <span class="game-genre">${game.genre || 'Media'}</span>
+        //                                 <h2 class="game-title">${game.title}</h2>
+        //                                 <p class="game-desc">${game.description || 'No description available.'}</p>
+        //                             </div>
+        //                         </div>
+        //                     `;
+        //                 });
+        //             } else {
+        //                 alert("Connected to API, but database collection is currently empty!");
+        //             }
+        //         })
+        //         .catch(err => {
+        //             console.error("API Fetch Error:", err);
+        //             alert("Could not connect to live backend API endpoint. Displaying static hub values.");
+        //         });
+        // }
+            function fetchGameDetails() {
+    const container = document.getElementById('gamesContainer');
+    
+    // 🔌 Directly targeting an open external network port bypasses Ingress completely!
+    fetch('http://3.26.235.216:5000/games') 
+        .then(response => response.json())
+        .then(data => {
+            if(data && data.length > 0) {
+                container.innerHTML = ''; // Clear fallback data
+                data.forEach(game => {
+                    container.innerHTML += `
+                        <div class="game-card">
+                            <div class="game-info">
+                                <span class="game-genre">${game.genre || 'Media'}</span>
+                                <h2 class="game-title">${game.title}</h2>
+                                <p class="game-desc">${game.description || 'No description available.'}</p>
+                            </div>
+                        </div>
+                    `;
                 });
-        }
+            } else {
+                alert("Connected to API directly, but database collection is currently empty!");
+            }
+        })
+        .catch(err => {
+            console.error("API Fetch Error:", err);
+            alert("Could not connect directly to backend on port 5000. Check port-forward status.");
+        });
+    }
     </script>
 </body>
 </html>

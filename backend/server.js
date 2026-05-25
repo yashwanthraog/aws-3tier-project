@@ -74,10 +74,13 @@
 
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors'); // 🌟 1. Import the CORS package
 const app = express();
 const PORT = 5000;
 
 app.use(express.json());
+app.use(cors()); // 🌟 2. Allow cross-origin requests from your browser
+
 
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://mongo-service:27017/devopsdb';
 
